@@ -31,6 +31,7 @@ class _CreateScreenState extends State<CreateScreen> {
               await todos.add(Todo(
                 title: _textController.text,
                 dateTime: DateTime.now().millisecondsSinceEpoch,
+                isDone: false,
               ));
 
               if (mounted) {

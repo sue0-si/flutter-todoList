@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:my_todolist/create_screen.dart';
 
 import 'main.dart';
+import 'todo_item.dart';
 
 class ListScreen extends StatefulWidget {
   const ListScreen({super.key});
@@ -20,9 +21,13 @@ class _ListScreenState extends State<ListScreen> {
       body: ListView(
         children: todos.values
             .map(
-              (todo) => ListTile(
-                title: Text(todo.title),
-                subtitle: Text('${todo.dateTime}'),
+              (todo) => TodoItem(
+                todo: todo,
+                onTap: (e) async {
+                  e.isDone = !e.isDone;
+                  await todo.save();
+                  setState(() {});
+                },
               ),
             )
             .toList(),
