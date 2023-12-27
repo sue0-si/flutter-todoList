@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:my_todolist/todo.dart';
@@ -8,6 +9,7 @@ import 'list_screen.dart';
 late final Box<Todo> todos;
 
 void main() async {
+  SystemChrome.setPreferredOrientations([DeviceOrientation.landscapeLeft]);
   await Hive.initFlutter();
   Hive.registerAdapter(TodoAdapter());
   todos = await Hive.openBox<Todo>('todoList.db');

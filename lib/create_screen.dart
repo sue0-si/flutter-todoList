@@ -23,7 +23,7 @@ class _CreateScreenState extends State<CreateScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('New list'),
+        title: Text('New task'),
         actions: [
           IconButton(
             onPressed: () async {
