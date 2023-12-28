@@ -23,7 +23,7 @@ class _CreateScreenState extends State<CreateScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('New task'),
+        title: const Text('New task'),
         actions: [
           IconButton(
             onPressed: () async {
@@ -31,6 +31,7 @@ class _CreateScreenState extends State<CreateScreen> {
               await todos.add(Todo(
                 title: _textController.text,
                 dateTime: DateTime.now().millisecondsSinceEpoch,
+
                 isDone: false,
               ));
 
@@ -38,7 +39,7 @@ class _CreateScreenState extends State<CreateScreen> {
                 Navigator.pop(context);
               }
             },
-            icon: Icon(Icons.done),
+            icon: const Icon(Icons.done),
           ),
         ],
       ),

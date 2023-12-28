@@ -9,7 +9,7 @@ import 'list_screen.dart';
 late final Box<Todo> todos;
 
 void main() async {
-  SystemChrome.setPreferredOrientations([DeviceOrientation.landscapeLeft]);
+  // SystemChrome.setPreferredOrientations([DeviceOrientation.landscapeLeft]);
   await Hive.initFlutter();
   Hive.registerAdapter(TodoAdapter());
   todos = await Hive.openBox<Todo>('todoList.db');

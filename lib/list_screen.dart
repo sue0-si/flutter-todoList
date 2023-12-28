@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:my_todolist/ItemList.dart';
+import 'package:my_todolist/category.dart';
 import 'package:my_todolist/create_screen.dart';
+import 'package:my_todolist/todo.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 import 'main.dart';
@@ -17,6 +20,8 @@ class _ListScreenState extends State<ListScreen> {
   DateTime _focusedDay = DateTime.now();
   DateTime? _selectedDay;
 
+  DateTime get focusedDay => _focusedDay;
+
   String getGreeting(DateTime now) {
     int hour = now.hour;
     if (0 <= hour && hour < 6) {
@@ -30,58 +35,35 @@ class _ListScreenState extends State<ListScreen> {
     }
   }
 
+  final _clothesList = Category().clothes;
+  final _immigrationList = Category().immigration;
+  final _makeupList = Category().makeups;
+  final _electronicList = Category().electronics;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(getGreeting(_focusedDay)),
-
-      ),
+      // appBar: AppBar(
+      //   title: Text(getGreeting(_focusedDay)),
+      // ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: Row(
+        child: Column(
           children: [
             Expanded(
-              child: TableCalendar(
-                focusedDay: DateTime.now(),
-                firstDay: DateTime.utc(2010, 10, 16),
-                lastDay: DateTime.utc(2030, 3, 14),
-                selectedDayPredicate: (day) {
-                  // Use `selectedDayPredicate` to determine which day is currently selected.
-                  // If this returns true, then `day` will be marked as selected.
-
-                  // Using `isSameDay` is recommended to disregard
-                  // the time-part of compared DateTime objects.
-                  return isSameDay(_selectedDay, day);
-                },
-                onDaySelected: (selectedDay, focusedDay) {
-                  if (!isSameDay(_selectedDay, selectedDay)) {
-                    // Call `setState()` when updating the selected day
-                    setState(() {
-                      _selectedDay = selectedDay;
-                      _focusedDay = selectedDay;
-                    });
-                  }
-                },
-                calendarFormat: _calendarFormat,
-                onFormatChanged: (format) {
-                  setState(() {
-                    _calendarFormat = format;
-                  });
-                },
-                onPageChanged: (focusedDay) {
-                  _focusedDay = focusedDay;
-                },
+              flex: 1,
+              child: Row(
+                children: [
+                  ItemList(itemList: _clothesList, title: 'Clothes',),
+                  ItemList(itemList: _immigrationList, title: 'Immigration',),
+                  ItemList(itemList: _makeupList, title: 'makeup supplies',),
+                  ItemList(itemList: _electronicList, title: 'electronics',),
+                ],
               ),
             ),
             Expanded(
+              flex: 1,
               child: ListView(
-                shrinkWrap: true,
-                // itemBuilder: (context, index) {
-                //   final sameDay = todos.values.where(
-                //       (e) => e.dateTime == _selectedDay?.millisecondsSinceEpoch);
-                //   if (sameDay != null) {}
-                // },
                 children: todos.values
                     .map(
                       (todo) => TodoItem(
@@ -107,7 +89,7 @@ class _ListScreenState extends State<ListScreen> {
         onPressed: () async {
           await Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => CreateScreen()),
+            MaterialPageRoute(builder: (context) => const CreateScreen()),
           );
           setState(() {});
         },
@@ -116,3 +98,4 @@ class _ListScreenState extends State<ListScreen> {
     );
   }
 }
+
