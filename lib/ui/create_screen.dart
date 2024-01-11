@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:my_todolist/todo.dart';
-
-import 'main.dart';
+import 'package:my_todolist/data/note_model.dart';
+import 'package:my_todolist/data/note_repository_impl.dart';
 
 class CreateScreen extends StatefulWidget {
   const CreateScreen({super.key});
@@ -11,11 +10,12 @@ class CreateScreen extends StatefulWidget {
 }
 
 class _CreateScreenState extends State<CreateScreen> {
-  final _textController = TextEditingController();
+  final _titleController = TextEditingController();
+  final _descriptionController = TextEditingController();
 
   @override
   void dispose() {
-    _textController.dispose();
+    _titleController.dispose();
     super.dispose();
   }
 
@@ -28,11 +28,9 @@ class _CreateScreenState extends State<CreateScreen> {
           IconButton(
             onPressed: () async {
               // save in DB
-              await todos.add(Todo(
-                title: _textController.text,
-                dateTime: DateTime.now().millisecondsSinceEpoch,
+              await NoteRepositoryImpl().todos.add(Note(
+                title: _titleController.text, description: '',
 
-                isDone: false,
               ));
 
               if (mounted) {
@@ -46,7 +44,7 @@ class _CreateScreenState extends State<CreateScreen> {
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: TextField(
-          controller: _textController,
+          controller: _titleController,
           decoration: InputDecoration(
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(10.0),

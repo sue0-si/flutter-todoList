@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:my_todolist/main.dart';
-import 'package:my_todolist/todo.dart';
+import 'package:my_todolist/data/note_model.dart';
+
+import '../../data/note_repository_impl.dart';
 
 class ItemList extends StatelessWidget {
   const ItemList({
@@ -17,7 +19,7 @@ class ItemList extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: SizedBox(
-        width: MediaQuery.of(context).size.width * 0.2,
+        width: MediaQuery.of(context).size.width * 0.3,
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -33,10 +35,9 @@ class ItemList extends StatelessWidget {
                     child: ElevatedButton(
                       onPressed: () async {
                         // save in DB
-                        await todos.add(Todo(
+                        await NoteRepositoryImpl().todos.add(Note(
                           title: _itemList[index],
-                          dateTime: DateTime.now().millisecondsSinceEpoch,
-                          isDone: false,
+                          description: '',
                         ));
                       },
                       child: Text(_itemList[index]),

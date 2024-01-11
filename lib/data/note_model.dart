@@ -1,8 +1,8 @@
 import 'package:hive/hive.dart';
-part 'todo.g.dart';
+part 'note_model.g.dart';
 
 @HiveType(typeId: 0)
-class Todo extends HiveObject {
+class Note extends HiveObject {
   @HiveField(0)
   int? id;
 
@@ -10,54 +10,45 @@ class Todo extends HiveObject {
   String title;
 
   @HiveField(2)
-  int dateTime;
-
-  @HiveField(3)
-  bool isDone;
+  String description;
 
 //<editor-fold desc="Data Methods">
-  Todo({
+  Note({
     this.id,
     required this.title,
-    required this.dateTime,
-    required this.isDone,
+    required this.description,
   });
 
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      (other is Todo &&
+      (other is Note &&
           runtimeType == other.runtimeType &&
           id == other.id &&
           title == other.title &&
-          dateTime == other.dateTime &&
-          isDone == other.isDone);
+          description == other.description);
 
   @override
-  int get hashCode =>
-      id.hashCode ^ title.hashCode ^ dateTime.hashCode ^ isDone.hashCode;
+  int get hashCode => id.hashCode ^ title.hashCode ^ description.hashCode;
 
   @override
   String toString() {
-    return 'Todo{' +
+    return 'Note{' +
         ' id: $id,' +
         ' title: $title,' +
-        ' dateTime: $dateTime,' +
-        ' isDone: $isDone,' +
+        ' description: $description,' +
         '}';
   }
 
-  Todo copyWith({
+  Note copyWith({
     int? id,
     String? title,
-    int? dateTime,
-    bool? isDone,
+    String? description,
   }) {
-    return Todo(
+    return Note(
       id: id ?? this.id,
       title: title ?? this.title,
-      dateTime: dateTime ?? this.dateTime,
-      isDone: isDone ?? this.isDone,
+      description: description ?? this.description,
     );
   }
 
@@ -65,17 +56,15 @@ class Todo extends HiveObject {
     return {
       'id': this.id,
       'title': this.title,
-      'dateTime': this.dateTime,
-      'isDone': this.isDone,
+      'description': this.description,
     };
   }
 
-  factory Todo.fromMap(Map<String, dynamic> map) {
-    return Todo(
+  factory Note.fromMap(Map<String, dynamic> map) {
+    return Note(
       id: map['id'] as int,
       title: map['title'] as String,
-      dateTime: map['dateTime'] as int,
-      isDone: map['isDone'] as bool,
+      description: map['description'] as String,
     );
   }
 
